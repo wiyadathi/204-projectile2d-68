@@ -19,9 +19,33 @@ public class Projectile2D : MonoBehaviour
             //if hit object with collider
             if (hit.collider != null) 
             {
+                //show target at click point
                 target.transform.position = new Vector2(hit.point.x, hit.point.y);
                 Debug.Log("hit " + hit.collider.name);
+
+                //calculate projectile velocity
+                Vector2 projectileVelocity = CalculateProjectileVelocity(shootPoint.position, hit.point, 1f);
+
+                //shoot bullet prefab using rigdbody2d
+                Rigidbody2D shootBullet = Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity);
+
+                //add projectile velocity vector to the bullet rigidbody
+                shootBullet.linearVelocity = projectileVelocity;
             }
         }
+    }
+
+    Vector2 CalculateProjectileVelocity(Vector2 origin, Vector2 target, float time)
+    {
+        Vector2 distance = target - origin;
+
+        //find velocity of x and y axis
+        float velocityX = distance.x / time;
+        float velocityY = distance.y / time + 0.5f * Mathf.Abs(Physics2D.gravity.y) * time;
+
+        //get projectile vector
+        Vector2 projectileVelocity = new Vector2(velocityX, velocityY);
+
+        return projectileVelocity;
     }
 }
