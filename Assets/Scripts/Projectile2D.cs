@@ -27,7 +27,7 @@ public class Projectile2D : MonoBehaviour
                 Vector2 projectileVelocity = CalculateProjectileVelocity(shootPoint.position, hit.point, 1f);
 
                 //shoot bullet prefab using rigdbody2d
-                Rigidbody2D shootBullet = Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity);
+                Rigidbody2D shootBullet = Instantiate(bulletPrefab, shootPoint.position, Quaternion.Euler(0, 0, 90));
 
                 //add projectile velocity vector to the bullet rigidbody
                 shootBullet.linearVelocity = projectileVelocity;
